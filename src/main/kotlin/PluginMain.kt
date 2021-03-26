@@ -74,7 +74,7 @@ object PluginMain : KotlinPlugin(
             }
 
             if (message.contentToString() == "/pic"){
-                etr?.sendAsImageTo(sender)
+                etr.sendAsImageTo(sender)
                 return@subscribeAlways
             }
         }
@@ -103,8 +103,8 @@ object PluginMain : KotlinPlugin(
             }
 
             if (message.contentToString() == "/pic"){
-                val anotherInformation = "Song: Broken 8cmix\nComposer: iroha(sasaki)\nBPM: 150\nEffector: Ether99\nS-Difficulty: +2\nDescription: 强片手、BD-C-BD-C"
-                group.sendMessage(etr.uploadAsImage(group)+anotherInformation)
+                val song=SDVXSong("Broken 8cmix","iroha(sasaki)","150","Ether99","+2","强片手、BD-C-BD-C",etr)
+                group.sendMessage(song.toMessage(group))
                 return@subscribeAlways
             }
 
