@@ -8,10 +8,11 @@ import net.mamoe.mirai.event.events.MessageRecallEvent
 import net.mamoe.mirai.event.globalEventChannel
 import net.mamoe.mirai.message.data.Dice
 import net.mamoe.mirai.message.data.MessageChain
+import net.mamoe.mirai.message.data.MessageSource
+import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import net.mamoe.mirai.utils.info
 import net.mamoe.mirai.utils.ExternalResource.Companion.sendAsImageTo
 import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
-import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 
 //主体
 object PluginMain : KotlinPlugin(
@@ -46,7 +47,6 @@ object PluginMain : KotlinPlugin(
     private var twoMinutesMessage : MutableSet <MessageChain> = mutableSetOf()
 
     //加载图片
-    //val pic002004 : Image = Image("")
     private val etr = getResourceAsStream("image\\00024.png")!!.toExternalResource("png")
 
     override fun onEnable() {
@@ -84,6 +84,14 @@ object PluginMain : KotlinPlugin(
             //检查是否白名单
             if (whiteGroup.all { it.toLong() != group.id }) {
                 return@subscribeAlways
+            }
+
+            //保存&删除消息
+            twoMinutesMessage.add(message)
+            for(messages in twoMinutesMessage) {
+                if(time - messages[MessageSource]!!.time >= 120) {
+                    twoMinutesMessage.remove(messages)
+                }
             }
 
             //测试是否可用
@@ -136,10 +144,12 @@ object PluginMain : KotlinPlugin(
             if (whiteGroup.all { it.toLong() != group.id }) {
                 return@subscribeAlways
             }
-            /*val allQuoteMessage : Set = twoMinutesMessage.filter(twoMinutesMessage -> )
-            val quoteMessage : MessageChain = allQuoteMessage(0)
-            val quoteString : String = quoteMessage.get().quote().toString()*/
-            group.sendMessage("撤回你妈呢")
+            val allQuoteMessage = mutableSetOf<MessageChain>()
+            for(message in twoMinutesMessage){
+                if(message[MessageSource]!!.ids.contentEquals(messageIds))
+                    allQuoteMessage.add(message)
+            }
+            group.sendMessage(allQuoteMessage.single().quote() + "撤回你妈呢")
         }
 
 

@@ -15,7 +15,12 @@ data class SDVXSong(
     val cover: ExternalResource
 ) {
     override fun toString(): String {
-        return "Song: $name\nComposer: $composer\nBPM: $bpm\nEffector: $effector\nS-Difficulty: $s_difficulty\nDescription: $description"
+        return """Song: $name
+Composer: $composer
+BPM: $bpm
+Effector: $effector
+S-Difficulty: $s_difficulty
+Description: $description"""
     }
     suspend fun toMessage(contact: Contact): Message {
         return cover.uploadAsImage(contact)+toString()
