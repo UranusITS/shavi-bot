@@ -11,7 +11,6 @@ import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.utils.info
 import net.mamoe.mirai.utils.ExternalResource.Companion.sendAsImageTo
 import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
-import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 
 //主体
 object PluginMain : KotlinPlugin(
@@ -49,8 +48,12 @@ object PluginMain : KotlinPlugin(
     //val pic002004 : Image = Image("")
     private val etr = getResourceAsStream("image\\00024.png")!!.toExternalResource("png")
 
+    private val SDVXSongManage = SDVXSongManager()
+
     override fun onEnable() {
         logger.info { "Plugin loaded" }
+
+        SDVXSongManage.init()
 
         //管理员消息
         globalEventChannel().subscribeAlways<FriendMessageEvent> {
@@ -103,8 +106,7 @@ object PluginMain : KotlinPlugin(
             }
 
             if (message.contentToString() == "/pic"){
-                val song=SDVXSong("Broken 8cmix","iroha(sasaki)","150","Ether99","+2","强片手、BD-C-BD-C",etr)
-                group.sendMessage(song.toMessage(group))
+                group.sendMessage(SDVXSongManage.getRandom().toMessage(group))
                 return@subscribeAlways
             }
 
