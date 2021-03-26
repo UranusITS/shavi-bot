@@ -47,8 +47,6 @@ object PluginMain : KotlinPlugin(
     private var twoMinutesMessage : MutableSet <MessageChain> = mutableSetOf()
 
     //加载图片
-    private val etr = getResourceAsStream("image\\00024.png")!!.toExternalResource("png")
-
     private val SDVXSongManage = SDVXSongManager()
 
     override fun onEnable() {
@@ -74,11 +72,6 @@ object PluginMain : KotlinPlugin(
                 val tmpMessage = "管理员功能\n1./test 查看状态\n2./help 查看帮助\n\n群聊功能\n1./test 查看状态\n2./dice 丢骰子" +
                     "\n3.复读"
                 sender.sendMessage(tmpMessage)
-                return@subscribeAlways
-            }
-
-            if (message.contentToString() == "/pic"){
-                etr.sendAsImageTo(sender)
                 return@subscribeAlways
             }
         }
@@ -114,13 +107,9 @@ object PluginMain : KotlinPlugin(
                 return@subscribeAlways
             }
 
-            if (message.contentToString() == "/pic"){
-                group.sendMessage(SDVXSongManage.getRandom().toMessage(group))
-                return@subscribeAlways
-            }
-
             //随个18
             if (message.contentToString() == "/random18"){
+                group.sendMessage(SDVXSongManage.getRandom().toMessage(group))
                 return@subscribeAlways
             }
 
@@ -152,7 +141,11 @@ object PluginMain : KotlinPlugin(
                 if(message[MessageSource]!!.ids.contentEquals(messageIds))
                     allQuoteMessage.add(message)
             }
-            group.sendMessage(allQuoteMessage.single().quote() + "撤回你妈呢")
+            if(allQuoteMessage.isNotEmpty()) {
+                group.sendMessage(allQuoteMessage.single().quote() + "心虚了是吧撤回？")
+            }else {
+                group.sendMessage("我看你也只会撤回了")
+            }
         }
 
 

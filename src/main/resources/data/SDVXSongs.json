@@ -2,6 +2,8 @@
     "songs": [
         {
             "name": "Broken 8cmix",
+            "level": 18,
+            "difficultyKind": 4,
             "composer": "iroha(sasaki)",
             "bpm": "150",
             "effector": "Ether99",
@@ -11,12 +13,25 @@
         },
         {
             "name": "Evans VolteX Pf arrange",
+            "level": 18,
+            "difficultyKind": 4,
             "composer": "cosMo＠暴走P",
-            "bpm": "250（大概）",
-            "effector": "cosMo＠暴走P（我猜的）",
-            "s_difficulty": "+2",
-            "description": "包邮p滚出音游juan",
+            "bpm": "180",
+            "effector": "cosMo＠暴走P",
+            "s_difficulty": "-8",
+            "description": "",
             "cover": "00144.png"
+        },
+        {
+            "name": "Joyeuse",
+            "level": 18,
+            "difficultyKind": 5,
+            "composer": "ke-ji",
+            "bpm": "260~274",
+            "effector": "Ether99",
+            "s_difficulty": "+12",
+            "description": "强键盘、强片手、DR-C-DR-C究极邪恶",
+            "cover": "02475.png"
         }
     ]
 }
