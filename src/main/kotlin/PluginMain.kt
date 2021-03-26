@@ -49,8 +49,12 @@ object PluginMain : KotlinPlugin(
     //加载图片
     private val etr = getResourceAsStream("image\\00024.png")!!.toExternalResource("png")
 
+    private val SDVXSongManage = SDVXSongManager()
+
     override fun onEnable() {
         logger.info { "Plugin loaded" }
+
+        SDVXSongManage.init()
 
         //管理员消息
         globalEventChannel().subscribeAlways<FriendMessageEvent> {
@@ -111,8 +115,7 @@ object PluginMain : KotlinPlugin(
             }
 
             if (message.contentToString() == "/pic"){
-                val song=SDVXSong("Broken 8cmix","iroha(sasaki)","150","Ether99","+2","强片手、BD-C-BD-C",etr)
-                group.sendMessage(song.toMessage(group))
+                group.sendMessage(SDVXSongManage.getRandom().toMessage(group))
                 return@subscribeAlways
             }
 

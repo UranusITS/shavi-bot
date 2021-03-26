@@ -1,0 +1,22 @@
+{
+    "songs": [
+        {
+            "name": "Broken 8cmix",
+            "composer": "iroha(sasaki)",
+            "bpm": "150",
+            "effector": "Ether99",
+            "s_difficulty": "+2",
+            "description": "强片手、BD-C-BD-C",
+            "cover": "00024.png"
+        },
+        {
+            "name": "Evans VolteX Pf arrange",
+            "composer": "cosMo＠暴走P",
+            "bpm": "250（大概）",
+            "effector": "cosMo＠暴走P（我猜的）",
+            "s_difficulty": "+2",
+            "description": "包邮p滚出音游juan",
+            "cover": "00144.png"
+        }
+    ]
+}
