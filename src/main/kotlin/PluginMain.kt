@@ -45,6 +45,7 @@ object PluginMain : KotlinPlugin(
 
     //防撤回
     private var twoMinutesMessage : MutableSet <MessageChain> = mutableSetOf()
+    private var tmpMessageSet : MutableSet <MessageChain> = mutableSetOf()
 
     //加载图片
     private val SDVXSongManage = SDVXSongManager()
@@ -85,11 +86,13 @@ object PluginMain : KotlinPlugin(
 
             //保存&删除消息
             twoMinutesMessage.add(message)
+            tmpMessageSet.clear()
             for(messages in twoMinutesMessage) {
                 if(time - messages[MessageSource]!!.time >= 120) {
-                    twoMinutesMessage.remove(messages)
+                    tmpMessageSet.add(messages)
                 }
             }
+            twoMinutesMessage.remove(tmpMessageSet)
 
             //测试是否可用
             if (message.contentToString() == "/test"){
