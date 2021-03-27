@@ -28,6 +28,6 @@ S-Difficulty: $s_difficulty
 Description: $description"""
     }
     suspend fun toMessage(contact: Contact): Message {
-        return PluginMain.getResourceAsStream("image\\$cover")!!.uploadAsImage(contact)+toString()
+        return PluginMain.getResourceAsStream("image/$cover")!!.uploadAsImage(contact)+toString()
     }
 }

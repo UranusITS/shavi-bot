@@ -112,7 +112,9 @@ object PluginMain : KotlinPlugin(
 
             //随个18
             if (message.contentToString() == "/random18"){
-                group.sendMessage(SDVXSongManage.getRandom().toMessage(group))
+                val randomResult = SDVXSongManage.getRandom()
+                if (randomResult==null) group.sendMessage("数据库中没有歌曲")
+                else group.sendMessage(randomResult.toMessage(group))
                 return@subscribeAlways
             }
 

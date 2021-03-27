@@ -3,11 +3,11 @@ plugins {
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
 
-    id("net.mamoe.mirai-console") version "2.5-M2"
+    id("net.mamoe.mirai-console") version "2.5.0"
 }
 
 group = "team.shavi"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenLocal()
