@@ -11,11 +11,10 @@ import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.MessageSource
 import net.mamoe.mirai.message.data.MessageSource.Key.quote
 import net.mamoe.mirai.utils.info
-import net.mamoe.mirai.utils.ExternalResource.Companion.sendAsImageTo
-import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
+//import java.lang.Thread.sleep
 
 //主体
-object PluginMain : KotlinPlugin(
+object  PluginMain : KotlinPlugin(
     JvmPluginDescription(
         id = "team.shavibot.mirai-plugin",
         name = "SHAVI-BOT",
@@ -35,7 +34,7 @@ object PluginMain : KotlinPlugin(
     private const val adminQQ : Long = 397083976
 
     //白名单群聊
-    private val whiteGroup = setOf(894195753 ,934764491 ,692264063)
+    private val whiteGroup = setOf(894195753 ,934764491 ,692264063, 957967970, 826712593)
 
     //test回复
     private val testReply = arrayOf("呵呵，我还没死","这群也就这了，成天研究个机器人在不在")
@@ -70,8 +69,14 @@ object PluginMain : KotlinPlugin(
 
             //帮助
             if (message.contentToString() == "/help"){
-                val tmpMessage = "管理员功能\n1./test 查看状态\n2./help 查看帮助\n\n群聊功能\n1./test 查看状态\n2./dice 丢骰子" +
-                    "\n3.复读"
+                val tmpMessage = """管理员功能
+1./test 查看状态
+2./help 查看帮助
+
+群聊功能
+1./test 查看状态
+2./dice 丢骰子
+3.复读"""
                 sender.sendMessage(tmpMessage)
                 return@subscribeAlways
             }
@@ -110,10 +115,12 @@ object PluginMain : KotlinPlugin(
                 return@subscribeAlways
             }
 
-            //随个18
-            if (message.contentToString() == "/random18"){
-                val randomResult = SDVXSongManage.getRandom()
-                if (randomResult==null) group.sendMessage("数据库中没有歌曲")
+            //随机
+            if (message.contentToString().startsWith("/random")){
+                val restrict = message.contentToString().replaceFirst("/random","").replace(" ","")
+                val randomResult : SDVXSong? = if(restrict == "") SDVXSongManage.getRandom()
+                else SDVXSongManage.getRandom(restrict)
+                if (randomResult == null) group.sendMessage("对不起，没有找到$restrict")
                 else group.sendMessage(randomResult.toMessage(group))
                 return@subscribeAlways
             }
@@ -154,8 +161,8 @@ object PluginMain : KotlinPlugin(
         }
 
 
-        /*
-        globalEventChannel().subscribeAlways<FriendMessageEvent>{
+
+        /*globalEventChannel().subscribeAlways<FriendMessageEvent>{
             //好友信息
             sender.sendMessage("hi")
         }
@@ -163,7 +170,7 @@ object PluginMain : KotlinPlugin(
             //自动同意好友申请
             accept()
         }
-        globalEventChannel().subscribeAlways<BotInvitedJoinGroupRequestEvent>{
+       lobalEventChannel().subscribeAlways<BotInvitedJoinGroupRequestEvent>{
             //自动同意加群申请
             accept()
         }*/
