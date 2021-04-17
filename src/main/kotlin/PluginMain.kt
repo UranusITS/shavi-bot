@@ -2,6 +2,7 @@ package team.shavibot.mirai.plugin
 
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
+import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.event.events.FriendMessageEvent
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.event.events.MessageRecallEvent
@@ -129,8 +130,8 @@ object  PluginMain : KotlinPlugin(
             if (lastMessage[group.id] != null) {
                 if (lastMessage[group.id]!!.first.contentEquals(message, ignoreCase = false, strict = true)) {
                     if(lastMessage[group.id]!!.second) {
-                        group.sendMessage(message)
                         lastMessage[group.id] = Pair(lastMessage[group.id]!!.first, false)
+                        group.sendMessage(message)
                         return@subscribeAlways
                     }
                 } else {
@@ -146,6 +147,10 @@ object  PluginMain : KotlinPlugin(
         globalEventChannel().subscribeAlways<MessageRecallEvent.GroupRecall>{
             //白名单判断
             if (whiteGroup.all { it.toLong() != group.id }) {
+                return@subscribeAlways
+            }
+            //不回复管理员撤回
+            if (operator != author) {
                 return@subscribeAlways
             }
             val allQuoteMessage = mutableSetOf<MessageChain>()
